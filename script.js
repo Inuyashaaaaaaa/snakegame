@@ -1,6 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-
+let backgroundImage = new Image();
 const tileSize = 20;
 let tileCountX = canvas.width / tileSize;
 let tileCountY = canvas.height / tileSize;
@@ -14,6 +14,31 @@ let score = 0;
 
 let gameInterval;
 let isGamePaused = false;
+
+// Define background images
+const backgrounds = {
+    "background1": "grass.png",
+    "background2": "grass2.jpg",
+    "background3": "grass3.jpg"
+};
+
+// Function to change the background image
+function changeBackground(background) {
+    backgroundImage.src = backgrounds[background];
+    // Redraw the canvas with the new background
+    drawBackground();
+}
+
+// Function to draw the background image
+function drawBackground() {
+    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+}
+
+// Set default background
+changeBackground("background1");
+
+
+
 
 let highScores = JSON.parse(localStorage.getItem('highScores')) || {};
 function updateLeaderboards() {
@@ -60,6 +85,13 @@ function changeSnakeColor() {
 
     // Change the color of the snake
     snakeColor = color;
+}
+
+let foodColor = "#ffffff"; // Default food color
+
+function changeFoodColor() {
+    const colorPicker = document.getElementById("foodColorPicker");
+    foodColor = colorPicker.value;
 }
 
 let levelSpeed; 
@@ -119,7 +151,10 @@ function restartGame() {
     document.getElementById("restartButton").style.display = "none";
     clearInterval(gameInterval);
     startGame();
+    // Reattach the keydown event listener
+    document.addEventListener("keydown", handleKeyDown);
 }
+
 
 function generateFood() {
     let foodX, foodY;
@@ -153,7 +188,7 @@ function isFoodOnSnake(x, y) {
 }
 
 
-
+let snakeColor= "#000000"; // Default food color
 
 function drawSnake() {
     snake.forEach(segment => {
@@ -165,7 +200,7 @@ function drawSnake() {
 }
 
 function drawFood() {
-    ctx.fillStyle = "#cc3333";
+    ctx.fillStyle = foodColor;
     ctx.fillRect(food.x, food.y, tileSize, tileSize);
 }
 
@@ -224,11 +259,9 @@ function showLeaderboard() {
     document.getElementById(`leaderboardLevel${selectedLevel}`).style.display = "block";
 }
 
-
-
-
 function gameOver() {
     clearInterval(gameInterval);
+    document.removeEventListener("keydown", handleKeyDown); // Remove the keydown event listener
     const levelSelector = document.getElementById("levelSelector");
     const selectedLevel = parseInt(levelSelector.value);
 
@@ -266,16 +299,9 @@ function gameOver() {
 
 
 
-
-
-
-
-
-
-
-
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     drawSnake();
     drawFood();
     drawScore();
@@ -283,7 +309,7 @@ function gameLoop() {
     collisionDetection();
 }
 //All keybinds for
-document.addEventListener("keydown", event => {
+function handleKeyDown(event) {
     const keyPressed = event.key.toLowerCase(); // Convert the key to lowercase for consistent comparison
     if ((keyPressed === "a" || keyPressed === "j") && dx !== tileSize) {
         dx = -tileSize;
@@ -309,12 +335,10 @@ document.addEventListener("keydown", event => {
         }
     }
 
-     // Call this function after updating highScores
+    // Call this function after updating highScores
     updateLeaderboards();
-});
-
-
-
-
-
     
+}
+
+// Attach the keydown event listener
+document.addEventListener("keydown", handleKeyDown);
