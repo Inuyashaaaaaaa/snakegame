@@ -41,3 +41,18 @@ table {
     background-color: #dddddd;
   }
 
+
+#container {
+    display: flex; /* Use flexbox for layout */
+}
+
+#gameContainer {
+    flex: 1; /* Occupy all available space */
+    margin-right: 20px; /* Add some margin to separate the game container from the leaderboards */
+}
+
+#leaderboards {
+    max-width: 450px; /* Set maximum width for leaderboards */
+}
+
+
