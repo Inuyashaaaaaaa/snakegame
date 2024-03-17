@@ -211,36 +211,60 @@ function collisionDetection() {
 }
 
 
+// Function to show leaderboards for the selected level
+function showLeaderboard() {
+    const selectedLevel = parseInt(document.getElementById("levelSelector").value);
+    
+    // Hide all leaderboards
+    document.querySelectorAll("#leaderboards > div").forEach(leaderboard => {
+        leaderboard.style.display = "none";
+    });
+    
+    // Show the leaderboard for the selected level
+    document.getElementById(`leaderboardLevel${selectedLevel}`).style.display = "block";
+}
+
+
+
 
 function gameOver() {
     clearInterval(gameInterval);
-    alert("Game Over! Your score was: " + score);
     const levelSelector = document.getElementById("levelSelector");
     const selectedLevel = parseInt(levelSelector.value);
 
-    // Update the high scores object
-    if (!highScores[selectedLevel]) {
-        highScores[selectedLevel] = [];
+    // Check if the current score is among the top 10 for the selected level
+    const isNewHighScore = !highScores[selectedLevel] || highScores[selectedLevel].length < 10 || score > highScores[selectedLevel][9].score;
+
+    // Show game over alert only if it's not a new high score
+    if (!isNewHighScore) {
+        alert("Game Over! Your score was: " + score);
     }
 
-    // Prompt the user for their name
-    const playerName = prompt("Congratulations! You achieved a new high score! Enter your name:");
+    if (isNewHighScore) {
+        // Prompt the user for their name
+        const playerName = prompt("Congratulations! You achieved a new high score! Enter your name:");
 
-    // Add the new entry to the high scores
-    highScores[selectedLevel].push({ name: playerName, score: score, snakeColor: snakeColor });
+        // Add the new entry to the high scores
+        if (!highScores[selectedLevel]) {
+            highScores[selectedLevel] = [];
+        }
+        highScores[selectedLevel].push({ name: playerName, score: score, snakeColor: snakeColor });
 
-    // Sort the high scores in descending order
-    highScores[selectedLevel].sort((a, b) => b.score - a.score);
+        // Sort the high scores in descending order
+        highScores[selectedLevel].sort((a, b) => b.score - a.score);
 
-    // Keep only the top 10 entries
-    highScores[selectedLevel] = highScores[selectedLevel].slice(0, 10);
+        // Keep only the top 10 entries
+        highScores[selectedLevel] = highScores[selectedLevel].slice(0, 10);
 
-    // Save the updated high scores to local storage
-    saveHighScores();
+        // Save the updated high scores to local storage
+        saveHighScores();
 
-    // Update the leaderboards
-    updateLeaderboards();
+        // Update the leaderboards
+        updateLeaderboards();
+    }
 }
+
+
 
 
 
