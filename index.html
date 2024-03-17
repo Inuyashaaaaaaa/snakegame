@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snake Game</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="score">Score: 0</div> <!-- Score element -->
+<canvas id="gameCanvas" width="400" height="400"></canvas>
+<div id="gameControls">
+    <p>Color:</p>
+    <input type="color" id="snakeColorPicker" onchange="changeSnakeColor()">
+    
+    <p>Level:</p>
+    <select id="levelSelector">
+        <option value="1">Level 1</option>
+        <option value="2">Level 2</option>
+        <option value="3">Level 3</option>
+        <option value="4">Level 4</option>
+        <option value="5">Level 5</option>
+        <option value="6">Level 6</option>
+        <option value="7">Level 7</option>
+        <option value="8">Level 8</option>
+        <option value="9">Level 9</option>
+        <option value="10">Level 10</option>
+    </select>
+    
+    <div id="gameControls">
+        <button id="startButton" onclick="startGame()">Start</button>
+        <button id="pauseButton" onclick="pauseGame()">Pause</button>
+        <button id="resumeButton" onclick="resumeGame()">Resume</button>
+        <button id="restartButton" onclick="restartGame()">Restart</button>
+    </div>
+    
+</div>
+
+<!-- Leaderboards -->
+<div id="leaderboards">
+    <h2>Leaderboards</h2>
+    <div id="leaderboardLevel1"></div>
+    <div id="leaderboardLevel2"></div>
+    <div id="leaderboardLevel3"></div>
+    <div id="leaderboardLevel4"></div>
+    <div id="leaderboardLevel5"></div>
+    <div id="leaderboardLevel6"></div>
+    <div id="leaderboardLevel7"></div>
+    <div id="leaderboardLevel8"></div>
+    <div id="leaderboardLevel9"></div>
+    <div id="leaderboardLevel10"></div>
+    
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
