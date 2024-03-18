@@ -311,33 +311,42 @@ function gameLoop() {
 //All keybinds for
 function handleKeyDown(event) {
     const keyPressed = event.key.toLowerCase(); // Convert the key to lowercase for consistent comparison
-    if ((keyPressed === "a" || keyPressed === "j") && dx !== tileSize) {
+    if ((keyPressed === "a" || keyPressed === "j" || event.key === "ArrowLeft") && dx !== tileSize) {
         dx = -tileSize;
         dy = 0;
     }
-    if ((keyPressed === "d" || keyPressed === "l") && dx !== -tileSize) {
+    if ((keyPressed === "d" || keyPressed === "l" || event.key === "ArrowRight") && dx !== -tileSize) {
         dx = tileSize;
         dy = 0;
     }
-    if ((keyPressed === "w" || keyPressed === "i") && dy !== tileSize) {
+    if ((keyPressed === "w" || keyPressed === "i" || event.key === "ArrowUp") && dy !== tileSize) {
         dx = 0;
         dy = -tileSize;
     }
-    if ((keyPressed === "s" || keyPressed === "k") && dy !== -tileSize) {
+    if ((keyPressed === "s" || keyPressed === "k" || event.key === "ArrowDown") && dy !== -tileSize) {
         dx = 0;
         dy = tileSize;
     }
-    if (keyPressed === "p") { 
+    if (keyPressed === "p" || keyPressed === " ") { 
         if (gameInterval) { // If the game is running, pause it
             pauseGame();
         } else if (isGamePaused) { // If the game is paused, resume it
             resumeGame();
         }
     }
+    function preventScroll(event) {
+        // Check if the pressed key is an arrow key
+        if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
+            // Prevent the default scrolling behavior
+            event.preventDefault();
+        }
+    }
+    
+    // Attach the keydown event listener to the window
+    window.addEventListener("keydown", preventScroll);
 
     // Call this function after updating highScores
     updateLeaderboards();
-    
 }
 
 // Attach the keydown event listener
