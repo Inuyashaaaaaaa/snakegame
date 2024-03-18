@@ -23,7 +23,11 @@
                         <button class="btn btn-secondary btn-lg" id="leftButton" style="font-size: 24px;">←</button>
                         <button class="btn btn-secondary btn-lg" id="pauseButtonHomePage" style="font-size: 24px;">P/R</button>
                         <button class="btn btn-secondary btn-lg" id="rightButton" style="font-size: 24px;">→</button><br>
-                        <button class="btn btn-secondary btn-lg" id="downButton" style="font-size: 24px;">↓</button>
+                        <button class="btn btn-secondary btn-lg" id="downButton" style="font-size: 24px;">↓</button><br>
+                        <button  class="btn btn-success" id="startButton" onclick="startGame()">Start</button>
+                            <button  class="btn btn-primary" id="pauseButton" onclick="pauseGame()">Pause</button>
+                            <button class="btn btn-warning" id="resumeButton" onclick="resumeGame()">Resume</button>
+                            <button class="btn btn-danger" id="restartButton" onclick="restartGame()">Restart</button>
                     </div>
                     
                     <div id="gameControls">
@@ -33,9 +37,9 @@
                             <option value="background2">Background 2</option>
                             <option value="background3">Background 3</option>
                         </select>
-                        <p>Color:</p>
+                        <p>Color:
                         <input type="color" id="snakeColorPicker" onchange="changeSnakeColor()">
-                        <p>Food Color:</p>
+                        Food Color:
                         <input type="color" id="foodColorPicker" onchange="changeFoodColor()">
                         <p>Level:</p>
                         <select id="levelSelector">
