@@ -327,13 +327,17 @@ function handleKeyDown(event) {
         dx = 0;
         dy = tileSize;
     }
-    if (keyPressed === "p" || keyPressed === " ") { 
+    if (keyPressed === "p" || keyPressed === " ") { // Pause with "p" or spacebar
         if (gameInterval) { // If the game is running, pause it
             pauseGame();
         } else if (isGamePaused) { // If the game is paused, resume it
             resumeGame();
         }
     }
+    if (event.altKey || keyPressed === "r") { // Restart with Alt key or "r"
+        restartGame();
+    }
+
     function preventScroll(event) {
         // Check if the pressed key is an arrow key
         if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
