@@ -355,3 +355,93 @@ function handleKeyDown(event) {
 
 // Attach the keydown event listener
 document.addEventListener("keydown", handleKeyDown);
+
+// Prevent scrolling on touchmove event
+canvas.addEventListener('touchmove', function(event) {
+    event.preventDefault();
+}, { passive: false });
+
+
+// Variable to store touch start coordinates
+let touchStartX;
+let touchStartY;
+
+// Attach touchstart event listener
+canvas.addEventListener('touchstart', handleTouchStart, false);
+
+// Attach touchend event listener
+canvas.addEventListener('touchend', handleTouchEnd, false);
+
+function handleTouchStart(event) {
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+}
+
+function handleTouchEnd(event) {
+    const touchEndX = event.changedTouches[0].clientX;
+    const touchEndY = event.changedTouches[0].clientY;
+
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    // Calculate the absolute value of deltaX and deltaY to detect the direction of swipe
+    const absDeltaX = Math.abs(deltaX);
+    const absDeltaY = Math.abs(deltaY);
+
+    // Set the threshold for swipe detection
+    const swipeThreshold = 50; // Adjust as needed
+
+    // Determine the direction of the swipe
+    if (absDeltaX > swipeThreshold || absDeltaY > swipeThreshold) {
+        if (absDeltaX > absDeltaY) {
+            // Horizontal swipe
+            if (deltaX > 0) {
+                // Right swipe
+                handleSwipe("right");
+            } else {
+                // Left swipe
+                handleSwipe("left");
+            }
+        } else {
+            // Vertical swipe
+            if (deltaY > 0) {
+                // Down swipe
+                handleSwipe("down");
+            } else {
+                // Up swipe
+                handleSwipe("up");
+            }
+        }
+    }
+}
+
+function handleSwipe(direction) {
+    // Convert swipe direction to game direction
+    switch (direction) {
+        case "up":
+            if (dy !== tileSize) {
+                dx = 0;
+                dy = -tileSize;
+            }
+            break;
+        case "down":
+            if (dy !== -tileSize) {
+                dx = 0;
+                dy = tileSize;
+            }
+            break;
+        case "left":
+            if (dx !== tileSize) {
+                dx = -tileSize;
+                dy = 0;
+            }
+            break;
+        case "right":
+            if (dx !== -tileSize) {
+                dx = tileSize;
+                dy = 0;
+            }
+            break;
+    }
+}
+
