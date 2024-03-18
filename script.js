@@ -353,6 +353,55 @@ function handleKeyDown(event) {
     updateLeaderboards();
 }
 
+// Function to handle arrow button clicks
+function handleArrowButtonClick(direction) {
+    switch (direction) {
+        case "up":
+            handleKeyDown({ key: "ArrowUp" });
+            break;
+        case "down":
+            handleKeyDown({ key: "ArrowDown" });
+            break;
+        case "left":
+            handleKeyDown({ key: "ArrowLeft" });
+            break;
+        case "right":
+            handleKeyDown({ key: "ArrowRight" });
+            break;
+    }
+}
+
+// Attach click event listeners to arrow buttons
+document.getElementById("upButton").addEventListener("click", function() {
+    handleArrowButtonClick("up");
+});
+document.getElementById("downButton").addEventListener("click", function() {
+    handleArrowButtonClick("down");
+});
+document.getElementById("leftButton").addEventListener("click", function() {
+    handleArrowButtonClick("left");
+});
+document.getElementById("rightButton").addEventListener("click", function() {
+    handleArrowButtonClick("right");
+});
+document.getElementById("pauseButtonHomePage").addEventListener("click", function() {
+    handleKeyDown({ key: " " }); // Simulate spacebar press to pause
+});
+
+// Function to show arrow buttons when activation button is clicked
+document.getElementById("activateButtonsButton").addEventListener("click", function() {
+    showArrowButtons();
+    // You may also want to hide the activation button after it's clicked
+    document.getElementById("activateButtonsButton").style.display = "none";
+});
+
+// Function to show arrow buttons
+function showArrowButtons() {
+    document.getElementById("arrowButtons").style.display = "block";
+}
+
+
+
 // Attach the keydown event listener
 document.addEventListener("keydown", handleKeyDown);
 
